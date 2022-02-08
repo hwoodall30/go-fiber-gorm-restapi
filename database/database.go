@@ -1,7 +1,7 @@
 package database
 
 import (
-	todo "gofiber/models"
+	// todo "gofiber/models"
 	"log"
 
 	"gorm.io/driver/sqlite"
@@ -13,8 +13,9 @@ var DATABASE_URI string = "test.db"
 
 func Connect() error {
     var err error
-
-    DB, err = gorm.Open(sqlite.Open(DATABASE_URI), &gorm.Config{})
+    DB, err = gorm.Open(sqlite.Open(DATABASE_URI), &gorm.Config{
+        SkipDefaultTransaction: true,
+    })
 
     if err != nil {
         panic(err)
@@ -22,9 +23,8 @@ func Connect() error {
 
 	log.Println("Connected to database")
 
-    DB.AutoMigrate(&todo.Todo{})
-
-    log.Println("Database migrated")
+    // DB.AutoMigrate(&todo.Todo{})
+    // log.Println("Database migrated")
 
     return nil
 }
